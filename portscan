@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Set the destination folder for the logs
+DESTINATION=/path/to/shared/folder
+
+# Set the target IP address
+TARGET=192.168.1.10
+
+# Set the target ports
+PORTS=(80 443 22)
+
+# Set the log filename
+LOGFILE=$(date +%Y-%m-%d).log
+
+# Loop through the ports and test connectivity
+for PORT in "${PORTS[@]}"
+do
+  nc -z -v -w5 $TARGET $PORT &>> $DESTINATION/$LOGFILE
+done
