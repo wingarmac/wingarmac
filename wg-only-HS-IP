@@ -1,0 +1,3 @@
+#!/bin/bash
+ip -4 addr show wg0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'
+wg show | awk '/peer:/ { counter++; id[counter]=$2 } /allowed ips:/ { split($3, ip, "/"); if (ip[1] != "") { allowed[counter]=ip[1]; } } /latest handshake:/ { split($3, hs_time, " "); if (hs_time[2] != "none") { handshake[counter]=1; } } END { for (i=1; i<=counter; i++) { if (handshake[i]) {print allowed[i]} } }'
