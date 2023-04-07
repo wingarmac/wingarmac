@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# get the handshaked VPN IPs
+output=$(./vpnIP)
+
+# Filter the output to find domain names containing "ns1" or "ns2"
+vpnIPs=$(echo "$output" | grep "vpn")
+
+# Print the filtered output
+# echo "$vpnIPs"
+
+
+# Generate the index.html
+{
+    echo '<!DOCTYPE html>'
+    echo '<html>'
+    echo '<head>'
+    echo '<title>Available Webmin and SSH Hosts</title>'
+    echo '<style>'
+    echo 'body {background-image: url("backgrnd.jpg"); background-size: cover; color: #3a75cb; font-family: "Ubuntu", sans-serif;}'
+    echo '.links {display: flex; justify-content: center; flex-wrap: wrap; list-style: none; padding: 0;}'
+    echo '.links li {margin: 20px; text-align: center; font-size: 25px;}'
+    echo '.links a {color: #3a75cb; text-decoration: none; display: flex; flex-direction: column; align-items: center;}'
+    echo '.links .webmin-icon {width: 64px; height: 64px; object-fit: contain;}'
+    echo '.links .ssh-icon {width: 32px; height: 32px; object-fit: contain;}'
+    echo '.links .host {display: block; font-size: 25px;}'
+    echo '.links .ssh-host {display: block; font-size: 20px;}'
+    echo 'h1 {color: #3a75cb; text-align: center; font-size: 36px; font-weight: bold; font-family: "Ubuntu", sans-serif;}'
+    echo '.black-bg {background-color: black; color: #00ff00; padding: 20px; margin-top: 30px;}'
+    echo '.black-bg h2 {text-align: center; font-size: 24px;}'
+    echo '.black-bg table {margin: 0 auto;}'
+    echo '.black-bg td {padding: 10px;}'
+    echo '.green-link {color: #00ff00; text-decoration: none;}'
+    echo '</style>'
+    echo '</head>'
+    echo '<body>'
+    echo '<div>'
+    # Available Webmin Hosts section
+    echo '<h1>Available Webmin Hosts</h1>'
+    echo '<ul class="links">'
+    while read -r hostname; do
+    org_hostname=$(echo "$hostname" | sed 's/.vpn$/.org/')
+    echo "<li><a href=\"http://${org_hostname}/\"><img class=\"webmin-icon\" src=\"wpc.png\"><span class=\"host\">${org_hostname}</span></a></li>"
+    done <<< "$vpnIPs"
+    echo '</ul>'
+    echo '</div>'
+    echo '<div class="black-bg">'
+    echo '<h2>Available SSH Hosts</h2>'
+    echo '<table>'
+    # Available SSH Hosts section
+    echo '<ul class="links">'
+    while read -r hostname; do
+        echo "<li><a href=\"ssh://${hostname}/\"><img class=\"ssh-icon\" src=\"term.png\"><span class=\"ssh-host\" style=\"color: #00ff00;\">${hostname}</span></a></li>"
+    done <<< "$vpnIPs"
+    echo '</ul>'
+    echo '</table>'
+    echo '</div>'
+    echo '</body>'
+    echo '</html>'
+} > /var/www/html/index.html
