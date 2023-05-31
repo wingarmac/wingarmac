@@ -1,34 +1,47 @@
 #!/bin/bash
 
-## VPN available host index.html creator.
+# get the handshaked VPN IPs
+output=$(/var/www/wingarmac.org/vpnIP)
 
-# Get the list of available VPN IPs from the wg-only-HS-IP script
-vpnIPs=$(/var/www/html/wg-only-HS-IP)
-
-# Loop through each IP address and determine the hostname
-while read -r ip; do
-  hostname=$(host "$ip" | awk '{print $5}' | sed 's/.$//')
-  if [[ $hostname ]]; then
-    hostnames+=("$hostname")
-  fi
-done < <(echo "$vpnIPs")
+# Filter the output to find domain names containing "ns1" or "ns2"
+vpnIPs=$(echo "$output" | grep "vpn")
 
 # Generate the index.html
 {
     echo '<!DOCTYPE html>'
     echo '<html>'
-    echo '<head>'
-    echo '<title>Available Webmin Hosts</title>'
-    echo '</head>'
+    echo '<link rel="stylesheet" type="text/css" href="./theme.css">'
     echo '<body>'
+    # Available Webmin Hosts section
+    echo '<header style="color: white; background-color: #254a93;">'
     echo '<h1>Available Webmin Hosts</h1>'
-    echo '<ul>'
-    for hostname in "${hostnames[@]}"; do
-        if [[ ! "$hostname" =~ "mob" ]]; then
-            echo "<li><a href=\"https://${hostname}/\">https://${hostname}/</a></li>"
-        fi
-    done
+    echo '</header>'
+    echo '<div class="container webmin-hosts">'
+    echo '<ul class="links">'
+    while read -r hostname; do
+    fqdn="${hostname/vpn/org}"
+shortname=$(echo "$fqdn" | cut -d '.' -f 1)
+echo "<div class='webmin-host'><a href=\"https://${fqdn}/\"><img class=\"webmin-icon\" src=\"wpc.png\"></a><span class=\"host\"><a href=\"https://${fqdn}/\">${shortname}</a></span></div>"
+    done <<< "$vpnIPs"
     echo '</ul>'
+    echo '</div>'
+    echo '</div>'
+    echo '<header style="color: green; background-color: white;">'
+    echo '<h2>Available SSH Hosts</h2>'
+    echo '</header>'
+    echo '<div class="container ssh-hosts">'
+    echo '<ul class="ssh-list">'
+    while read -r hostname; do
+        if [[ "$hostname" == *"ubcynt"* ]]; then
+            continue  # skip this hostname
+        fi
+        fqdn="${hostname}"
+        if [[ "$fqdn" == *"wingarmac"* ]]; then
+            echo "<li><img class=\"ssh-icon\" src=\"term.png\"><a href=\"ssh://${hostname}\">${fqdn}</a></li>"
+        fi
+    done <<< "$vpnIPs"
+    echo '</ul>'
+    echo '</div>'
     echo '</body>'
     echo '</html>'
-} > /var/www/html/index.html
+} > /var/www/wingarmac.org/index.html
