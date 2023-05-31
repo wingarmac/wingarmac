@@ -33,11 +33,11 @@ ip6tables -A FORWARD -i $EXTERNAL_INTERFACE -o $WG_INTERFACE -m conntrack --ctst
 ip6tables -A INPUT -i $EXTERNAL_INTERFACE -p udp --dport 58585 -j ACCEPT
 
 # Allow traffic from the WireGuard interface to the internal network
-ip6tables -A FORWARD -i $WG_INTERFACE -s $WG_NETWORK -j ACCEPT
-`
+ip6tables -A FORWARD -i $WG_INTERFACE -s $WG_NETWORK -j ACCEPT`
+
 **remove-nat-routing-IPv6.sh**
-`
-#!/bin/bash
+
+`#!/bin/bash
 
 # Define variables
 WG_INTERFACE="wgIPv6"
@@ -58,6 +58,6 @@ ip6tables -D FORWARD -i $EXTERNAL_INTERFACE -o $WG_INTERFACE -m state --state RE
 ip6tables -D INPUT -i $EXTERNAL_INTERFACE -p udp --dport 58585 -j ACCEPT
 
 # Remove traffic allowance from the WireGuard interface to the internal network
-ip6tables -D FORWARD -i $WG_INTERFACE -s $WG_NETWORK -j ACCEPT
+ip6tables -D FORWARD -i $WG_INTERFACE -s $WG_NETWORK -j ACCEPT`
 
-`
+
