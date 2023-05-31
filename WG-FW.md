@@ -10,7 +10,7 @@ Last updates:
 ubcynt version: for IPv6 tunnel into IPv4 for port forwarded server
 
 **add-nat-routing-IPv6.sh**
-``
+`
 #!/bin/bash
 
 # Define variables
@@ -34,9 +34,9 @@ ip6tables -A INPUT -i $EXTERNAL_INTERFACE -p udp --dport 58585 -j ACCEPT
 
 # Allow traffic from the WireGuard interface to the internal network
 ip6tables -A FORWARD -i $WG_INTERFACE -s $WG_NETWORK -j ACCEPT
-``
+`
 **remove-nat-routing-IPv6.sh**
-``
+`
 #!/bin/bash
 
 # Define variables
@@ -60,4 +60,4 @@ ip6tables -D INPUT -i $EXTERNAL_INTERFACE -p udp --dport 58585 -j ACCEPT
 # Remove traffic allowance from the WireGuard interface to the internal network
 ip6tables -D FORWARD -i $WG_INTERFACE -s $WG_NETWORK -j ACCEPT
 
-``
+`
