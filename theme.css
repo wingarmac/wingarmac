@@ -1,0 +1,157 @@
+/* Header */
+header {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    height: 20%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 5px rgba(233, 233, 244, 0.5);
+    background-color: transparent;
+}
+
+/* Body */
+body {
+    background-color: #3a75cb;
+    padding: 20px;
+    margin: 0;
+    width: 98%;
+    height: 100%;
+}
+
+/* Headings */
+h1, h2, h3 {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 24px;
+    text-decoration: underline;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Container */
+.container {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 5px rgba(233, 233, 244, 0.5);
+}
+
+/* Webmin Hosts */
+.webmin-hosts {
+    background-color: #254a93;
+    color: white;
+}
+
+.webmin-hosts h1 {
+    text-align: left;
+    font-size: 36px;
+    font-weight: bold;
+    font-family: "Ubuntu", sans-serif;
+    color: white;
+    text-shadow: 2px 2px 5px #000;
+    margin-bottom: 20px;
+}
+
+.webmin-hosts .links {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.webmin-hosts .host a {
+    color: white;
+    text-decoration: none;
+}
+
+.webmin-hosts .webmin-host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5px;
+    margin-right: 10px; /* Add margin-right for spacing */
+}
+
+.webmin-hosts .webmin-icon {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    margin-bottom: 0px; /* Decrease the margin-bottom value */
+}
+
+.webmin-hosts .host {
+    font-family: "Ubuntu", sans-serif;
+    font-size: 20px;
+    color: white;
+    text-align: center;
+    margin-top: 3px; /* Decrease the margin-top value */
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* SSH Hosts */
+.ssh-hosts {
+    background-color: #e9e9f4;
+    color: #3a75cb;
+    padding: 20px;
+}
+
+.ssh-hosts .header-wrapper {
+    color: green;
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.ssh-hosts ul.ssh-list {  /* Added styles for the SSH host list */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ssh-hosts ul.ssh-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.ssh-hosts ul.ssh-list li .ssh-icon {
+    width: 20px !important;
+    height: 20px !important;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.ssh-hosts ul.ssh-list li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-family: "Ubuntu Mono", monospace;
+    font-size: 20px;
+    color: green;
+}
+
+
+
+/* Hosts logs */
+
+.hosts-logs {
+    margin-top: 0px;
+    clear: both;
+    background-color: #254a93;
+    font-family: "Ubuntu Mono", monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    color: white;
+    white-space: pre-wrap;
+    height: 80vh;
+    overflow-y: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+}
+ 
